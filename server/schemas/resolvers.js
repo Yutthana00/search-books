@@ -15,7 +15,48 @@ const resolvers = {
     },
   },
 
-  
+  Mutation: {
+    addUser: async (parent, { username, email, password }) => {
+      try {
+        console.log("hit");
+        const user = await User.create({ username, email, password });
+        console.log(user);
+        const token = signToken(user);
+        console.log(token);
+        return { token, user };
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        throw new AuthenticationError("No user found with this email address");
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError("Incorrect credentials");
+      }
+
+      const token = signToken(user);
+
+      return { token, user };
+    },
+    saveBook: async (_parent, { bookData }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { savedBooks: bookData } },
+          { new: true }
+        );
+        return updatedUser;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    
 };
 
 module.exports = resolvers;
