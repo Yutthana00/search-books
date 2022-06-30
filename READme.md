@@ -2,8 +2,8 @@
 
 This project refactor restful API to Apollo Server using GraphQL queries and mutations. This website is created for rendered books searched into a well organise list. This project challenged my knowledge of the full MERN stack and hope to develop this skill more in the future.
 
-#### Githib Link: https://github.com/Yutthana00/search-books
-#### Heroku Deployment Link: 
+#### Githib Link: https://tinyurl.com/2cpbyj7t
+#### Heroku Deployment Link: https://tinyurl.com/3bbebn67
 
 #### Application technologies used:
 
